@@ -1,0 +1,9 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3 class="text-success">Your {{ object.pizza }} is on the way :)</h3>
+<p><a href = "{% url 'home' %}">Buy More Pizzas</a> | <a href ="{% url 'home' %}">Back to home</a></p>
+
+{% endblock content %}

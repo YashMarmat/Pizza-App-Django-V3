@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="" method = 'post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class = "btn btn-success" type='submit'>Log In</button>
+</form>
+
+<p>Username: newuser, password: pp123456</p>
+<li>for demonstration perposes i made these details visible you can delete this info by going in login.html file :)</li>
+{% endblock content %}

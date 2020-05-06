@@ -1,0 +1,52 @@
+
+{% extends 'base.html' %}
+
+<a href = "{% url 'home' %}">go back</a>
+
+{% block content %}
+
+<h2 class="p-3 mb-2 bg-primary text-white">Pizza Selected: <u>{{ object.pizza }}</u> ({{ object.price }} $)</h2><br>
+
+<h3 class="text-info">Toppings Added</h3>
+
+{% if object.cheese is True %}
+<li>Extra Cheese</li>
+{% endif %}
+
+{% if object.onion is True %}
+<li>Extra Onion</li>
+{% endif %}
+
+{% if object.tomato is True %}
+<li>Extra Tomato</li>
+{% endif %}
+
+<!-- No topping warning-->
+{% if object.cheese is not True and object.onion is not True and object.tomato is not True %}
+<li>No Extra Toppings Added !</li>
+{% endif %}
+
+
+<br><p>Total Pizzas: {{ object.quantity }}</p>
+
+<p><a class="btn btn-outline-primary btn-sm" href="{% url 'update' object.pk %}" role="button">Change Toppings and Pizzas Quantity</a></p>
+
+{% if object.quantity == 0 %}
+
+    <p class="text-danger">You selected Zero Pizzas. Try again!</p>
+    {% elif object.quantity > 4 %}
+    <p class="text-danger">Sorry, upto 4 Pizzas can be selected. Try again!</p>
+    {% else %}
+    <a class="btn btn-success" href="{% url 'confirm' object.pk %}" role="button">Proceed to buy</a>
+
+{% endif %}
+
+{% if user.is_authenticated %}
+<p><br><a href = "{% url 'admin_update' object.id %}">Admin Changes</a></p>
+<p><a class="btn btn-outline-danger btn-sm" href="{% url 'delete' object.id %}" role="button">Delete Pizza</a></p>
+    
+{% endif %}
+
+{% endblock content %}
+
+<!-- NOTE:  in django the if else statements do not contain False. So instead of providing False in conditions use not True for example: if object.pineapple is not True -->

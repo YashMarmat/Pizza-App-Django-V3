@@ -1,0 +1,13 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p><a href ="{% url 'create_pizza' %}">Change Pizza Name</a></p>
+<form action="" method = 'post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class = 'btn btn-success' type = 'submit'>Done</button> | <a href = "{% url 'home' %}">Cancel</a>
+</form>
+
+{% endblock content %}

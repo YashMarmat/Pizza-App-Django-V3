@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Create Pizza Name</h3>
+<li>Do not pick up already existing name</li>
+
+<form action="" method = 'post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class = " btn btn-success" type = 'submit'>Save Pizza</button> | <a href = "{% url 'create' %}">Cancel</a>
+</form>
+
+{% endblock content %}

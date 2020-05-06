@@ -1,0 +1,122 @@
+
+{% extends 'base.html' %}
+
+<a href ="{% url 'home' %}">Home</a>
+
+{% block content %}
+
+<h2 class = "p-3 mb-2 bg-secondary text-white">Product Summary</h2><br>
+<h4 class="text-primary"><u>{{ object.pizza }}</u></h4>
+<br><h3 class="text-success">Toppings Added</h3>
+
+{% if object.cheese is True %}
+<li>Extra Cheese</li>
+{% endif %}
+
+{% if object.onion is True %}
+<li>Extra Onion</li>
+{% endif %}
+
+{% if object.tomato is True %}
+<li>Extra Tomato</li>
+{% endif %}
+
+<!-- No topping warning-->
+{% if object.cheese is not True and object.onion is not True and object.tomato is not True %}
+<p>No Extra Toppings Added !</p>
+{% endif %}
+
+<br>
+
+<!--price X quantity-->
+<!--{% widthratio object.price 1 object.quantity as total %}-->
+
+<!--
+Ammount Payable for {{ object.quantity}} 
+Pizzas: {{total|add:1}} $
+-->
+
+
+<!--single topping-->
+{% if object.cheese is True and object.onion is not True and object.tomato is not True %}
+{% widthratio object.price 1 object.quantity as total %}
+
+<p>Bill Detail: {{ object.price }} $ (pizza price) + 0 $(topping charge) x {{object.quantity}}(total pizza) = {{ total }} $</p>
+
+<p>Total Amount Payable: {{ total }} $</p>
+{% endif %}
+
+{% if object.onion is True and object.cheese is not True and object.tomato is not True %}
+{% widthratio object.price 1 object.quantity as total %}
+
+<p>Bill Detail: {{ object.price }} $ (pizza price) + 0 $(topping charge) x {{object.quantity}}(total pizza) = {{ total }} $</p>
+
+<p>Total Amount Payable: {{ total }} $</p>
+{% endif %}
+
+{% if object.tomato is True and object.onion is not True and object.cheese is not True %}
+{% widthratio object.price 1 object.quantity as total %}
+
+<p>Bill Detail: {{ object.price }} $ (pizza price) + 0 $(topping charge) x {{object.quantity}}(total pizza) = {{ total }} $</p>
+
+<p>Total Amount Payable: {{ total }} $</p>
+{% endif %}
+
+<!--dual topping-->
+{% if object.cheese is True and object.onion is True and object.tomato is not True %}
+{% widthratio object.price 1 object.quantity as total %}
+{% widthratio object.quantity 1 1 as grand_total %}
+
+<p>Bill Detail: {{ object.price }} $ (pizza price) + 1 $(topping charge) x {{object.quantity}}(total pizza) = {{ total|add:grand_total }} $</p>
+
+<p>Total Amount Payable: {{ total|add:grand_total }} $</p>
+{% endif %}
+
+{% if object.cheese is True and object.tomato is True and object.onion is not True %}
+{% widthratio object.price 1 object.quantity as total %}
+{% widthratio object.quantity 1 1 as grand_total %}
+
+<p>Bill Detail: {{ object.price }} $ (pizza price) + 1 $(topping charge) x {{object.quantity}}(total pizza) = {{ total|add:grand_total }} $</p>
+
+<p>Total Amount Payable: {{ total|add:grand_total }} $</p>
+{% endif %}
+
+{% if object.onion is True and object.tomato is True and object.cheese is not True %}
+{% widthratio object.price 1 object.quantity as total %}
+{% widthratio object.quantity 1 1 as grand_total %}
+
+<p>Bill Detail: {{ object.price }} $ (pizza price) + 1 $(topping charge) x {{object.quantity}}(total pizza) = {{ total|add:grand_total }} $</p>
+
+<p>Total Amount Payable: {{ total|add:grand_total }} $</p>
+{% endif %}
+
+<!--tripple topping-->
+{% if object.cheese is True and object.onion is True and object.tomato is True %}
+{% widthratio object.price 1 object.quantity as total %}
+{% widthratio object.quantity 1 2 as grand_total %}
+
+<p>Bill Detail: {{ object.price }} $ (pizza price) + 2 $(topping charge) x {{object.quantity}}(total pizza) = {{ total|add:grand_total }} $</p>
+
+<p>Total Amount Payable: {{ total|add:grand_total }} $</p>
+{% endif %}
+
+
+<!--No topping-->
+{% if object.cheese is not True and object.onion is not True and object.tomato is not True %}
+
+<!-- Bill -->
+<p>Bill Detail: {{ object.price }} $ (pizza price) + 0 $(topping charge) x {{object.quantity}}(total pizza) = {{ total }} $</p>
+
+<p>Total Amount Payable: {{ total }} $</p>
+{% endif %}
+
+<p></p>
+
+<p>Total Pizzas: {{ object.quantity }}</p><br>
+
+<p><a class="btn btn-outline-success" href="{% url 'buy' object.pk %}" role="button">Buy</a></p>  
+<a href = "{% url 'update' object.pk %}">Edit</a> | <a href = "{% url 'home' %}">Cancel order</a>
+
+{% endblock content %}
+
+<!-- NOTE:  in django the if else statements do not contain False. So instead of providing False in conditions use not True for example: if object.pineapple is not True -->
