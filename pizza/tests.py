@@ -94,9 +94,6 @@ class TestPizza(TestCase):
 
     # admin privilages tests
 
-    def test_adminupdate_pizza_view(self):
-        
-
     def test_createpage_view_for_logged_in_user(self):
         self.client.login(username = 'admin', email = 'forexample.com', password = 'secret')
         self.request = self.client.get(reverse('create'))
